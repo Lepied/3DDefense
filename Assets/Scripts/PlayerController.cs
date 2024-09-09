@@ -5,20 +5,25 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    float horizontal;
+    float vertical;
     public float speed = 5f;
-    public float rotationSpeed = 700f;
     private PlayerController controller;
-    private Vector3 direction;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        controller = GetComponent<PlayerController>();
-    }
+    Vector3 direction;
 
     // Update is called once per frame
     void Update()
     {
-        
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+
+        direction = new Vector3(horizontal, 0, vertical).normalized;
+
+        if (direction.magnitude > 0.1f)
+        {
+            transform.position += direction * speed * Time.deltaTime;
+        }
+
     }
 }
