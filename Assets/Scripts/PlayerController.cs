@@ -23,7 +23,14 @@ public class PlayerController : MonoBehaviour
         if (direction.magnitude > 0.1f)
         {
             transform.position += direction * speed * Time.deltaTime;
-        }
 
+            if (direction != Vector3.zero)
+            {
+                Vector3 relativePos = (transform.position + direction) - transform.position;
+                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10);
+            }
+        }
+      
     }
 }
