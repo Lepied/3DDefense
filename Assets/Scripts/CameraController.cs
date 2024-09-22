@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -12,5 +13,10 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
         transform.position = target.position + offset;
+    }
+
+    void onCollisionEnter()
+    {
+
     }
 }

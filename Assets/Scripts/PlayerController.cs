@@ -9,28 +9,49 @@ public class PlayerController : MonoBehaviour
     float vertical;
     public float speed = 5f;
     private PlayerController controller;
+    private Rigidbody rb;
 
     Vector3 direction;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Update()
     {
+   
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
         direction = new Vector3(horizontal, 0, vertical).normalized;
+    }
 
+    void FixedUpdate()
+    {
         if (direction.magnitude > 0.1f)
         {
-            transform.position += direction * speed * Time.deltaTime;
+            Vector3 move = direction * speed * Time.fixedDeltaTime;
 
+
+            rb.MovePosition(rb.position + move);
+
+            
             if (direction != Vector3.zero)
             {
-                Vector3 relativePos = (transform.position + direction) - transform.position;
-                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10);
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                rb.rotation = Quaternion.Lerp(rb.rotation, toRotation, Time.fixedDeltaTime * 10);
             }
         }
-      
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+
+            direction = Vector3.zero;
+        }
     }
 }
+
