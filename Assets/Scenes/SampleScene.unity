@@ -931,6 +931,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  NCZMask:
+    serializedVersion: 2
+    m_Bits: 128
+  canPlace: 1
+  color: {r: 1, g: 0, b: 0, a: 0.5}
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &1149694843
 Transform:
   m_ObjectHideFlags: 0
@@ -1115,7 +1121,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7687704826627455361, guid: 99e6eaf589f25d444ad852657620337e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
