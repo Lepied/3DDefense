@@ -1,22 +1,35 @@
+using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : NetworkBehaviour
 {
     public Transform target;
     public Vector3 offset;
 
+    private Camera cam;
 
+    private void Start()
+    {
+        cam = GetComponent<Camera>();
+        cam.enabled = false;
+    }
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = target.position + offset;
+        if(target != null)
+        {
+            transform.position = target.position + offset;
+        }
+        
     }
 
-    void onCollisionEnter()
+    public void SetTarget(Transform newTarget)
     {
-
+        target = newTarget;
+        cam.enabled = true;
     }
+
 }
