@@ -1,9 +1,10 @@
+using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class BuildingManager : MonoBehaviour
+public class BuildingManager : NetworkBehaviour
 {
     public GameObject previewPrefab;
     public GameObject buildingPrefab;
@@ -33,12 +34,11 @@ public class BuildingManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && canPlace)
             {
-                PlaceBuilding();
+                PlaceBuilding(currentPreview.transform.position);
             }
         }
         if (currentPreview == null)
         {
-
             return;
         }
     }
@@ -49,8 +49,6 @@ public class BuildingManager : MonoBehaviour
         if(isBuilding)
         {
             currentPreview = Instantiate(previewPrefab);
-            //currentPreview.AddComponent<PreviewBuilding>().buildingManager = this; // PreviewBuilding 스크립트 추가 및 참조 설정
-            //currentPreview의 자식 오브젝트에 PreviewBuilding 추가
             PreviewBuilding previewBuilding = currentPreview.GetComponentInChildren<Collider>().gameObject.AddComponent<PreviewBuilding>();
             previewBuilding.buildingManager = this; // BuildingManager를 할당
 
@@ -78,8 +76,10 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    void PlaceBuilding()
+    [ServerRpc(RequireOwnership = false)]
+    void PlaceBuilding(Vector3 position)
     {
-        Instantiate(buildingPrefab, currentPreview.transform.position, Quaternion.identity);
+        GameObject building = Instantiate(buildingPrefab,position,Quaternion.identity);
+        Spawn(building);
     }
 }
