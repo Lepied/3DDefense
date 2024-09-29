@@ -10,11 +10,12 @@ public class Enemy : NetworkBehaviour
     public int damage = 10;
 
     private Transform target;
-    //private float attackTime = 0;
+    private float attackCooldown = 2f;
+    private float lastAttacktime;
 
     void Update()
     {
-        if (base.IsServer)
+        if (IsServer)
         {
             FindClosestTarget();
             if(target != null)
@@ -55,8 +56,17 @@ public class Enemy : NetworkBehaviour
     {
         if (Vector3.Distance(transform.position, target.position) <= attackRange)
         {
-            Debug.Log("플레이어 체력 " + damage + "만큼 감소 됨.");
-            DespawnEnemy();
+            if(Time.time >= lastAttacktime+attackCooldown)
+            {
+                PlayerController playerController = target.GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    playerController.TakeDamage(damage);
+                }
+                lastAttacktime = Time.time;
+                DespawnEnemy();
+            }
+
         }
     }
 

@@ -1,5 +1,6 @@
 using FishNet.Example.ColliderRollbacks;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using LiteNetLib;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,22 +20,32 @@ public class PlayerController : NetworkBehaviour
     private Vector3 cameraOffset = new Vector3(0, 15, -9); // 카메라 위치 오프셋
     private Camera playerCamera;
 
+
+    public readonly SyncVar<int> hp = new SyncVar<int>();
+    private int playerId; // 플레이어 ID 저장
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+      
     }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
-        if(base.IsOwner) 
-        {
+        if(base.IsOwner)
+        { 
             playerCamera = Camera.main;
             playerCamera.transform.position = transform.position + cameraOffset; ;
             playerCamera.transform.rotation = Quaternion.Euler(60, 0, 0); //방향고정
         }
     }
-
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        hp.Value = 100; // 초기 체력값 설정
+    }
 
     void Update()
     {
@@ -78,21 +89,22 @@ public class PlayerController : NetworkBehaviour
 
     }
 
-    /*
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-
-            direction = Vector3.zero;
-        }
-    }
-    */
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.CompareTag("Wall"))
         {
             direction = Vector3.zero;
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void TakeDamage(int damage)
+    {
+        hp.Value -= damage;
+        Debug.Log("남은 체력 : "+ hp.Value);
+        if(hp.Value<=0)
+        {
+            Debug.Log("$\"플레이어 ID: {OwnerClientId}\" 사망");
         }
     }
 }
