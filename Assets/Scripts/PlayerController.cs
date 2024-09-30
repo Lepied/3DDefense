@@ -104,7 +104,7 @@ public class PlayerController : NetworkBehaviour
         Debug.Log("남은 체력 : "+ hp.Value);
         if(hp.Value<=0)
         {
-            Debug.Log("$\"플레이어 ID: {OwnerClientId}\" 사망");
+            Debug.Log($"플레이어 ID: {this.NetworkObject.OwnerId} 사망");
         }
     }
 }

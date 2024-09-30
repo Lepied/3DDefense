@@ -15,7 +15,7 @@ public class Enemy : NetworkBehaviour
 
     void Update()
     {
-        if (IsServer)
+        if (IsServerInitialized)
         {
             FindClosestTarget();
             if(target != null)
