@@ -6,26 +6,19 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    /[SerializeField]
-    private RelayManager relayManager;
+    public RelayManager relayManager;
 
-    [SerializeField]
-    private TMP_InputField joinCodeInputField;
-    [SerializeField]
-    private Text statusText;
-
-
-    void Start()
+    public async void OnClickHost()
     {
-        if(relayManager == null)
-        {
-            relayManager = FindObjectOfType<RelayManager>();
-        }
+        // RelayManager의 StartHostWithRelay 함수 호출
+        await relayManager.StartHostWithRelay();  // 비동기 함수이므로 따로 await를 하지 않고 그냥 호출 가능
     }
 
-    // Update is called once per frame
-    void Update()
+    // 클라이언트 참가 버튼 클릭 시 호출되는 함수
+    public async void OnClickJoin()
     {
-        
+        // RelayManager의 StartClientWithRelay 함수 호출
+        await relayManager.StartClientWithRelay(); // 비동기 함수이므로 따로 await를 하지 않고 그냥 호출 가능
     }
+
 }
