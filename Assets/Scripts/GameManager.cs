@@ -44,7 +44,8 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SpawnEnemy()
     {
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        //GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        NetworkObject enemy = NetworkManager.GetPooledInstantiated(enemyPrefab,spawnPoint.position,Quaternion.identity,true);
         Spawn(enemy);
     }
 
