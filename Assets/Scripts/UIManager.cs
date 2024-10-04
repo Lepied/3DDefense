@@ -8,6 +8,22 @@ public class UIManager : MonoBehaviour
 {
     public RelayManager relayManager;
 
+    /*
+    private static UIManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instance
+        }
+    }
+    */
+
     public async void OnClickHost()
     {
         // RelayManager의 StartHostWithRelay 함수 호출

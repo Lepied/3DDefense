@@ -2,6 +2,7 @@ using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : NetworkBehaviour
 {
@@ -13,6 +14,19 @@ public class Enemy : NetworkBehaviour
     private float attackCooldown = 2f;
     private float lastAttacktime;
 
+    [SerializeField]
+    private NavMeshAgent agent;
+
+
+    void Start()
+    {
+        if (agent == null)
+        {
+            Debug.LogError("NavMeshAgent가 할당되지 않았습니다.");
+        }
+        agent.speed = speed;
+        //agent.stoppingDistance = attackRange; //공격 사거리에서 멈추게하기
+    }
     void Update()
     {
         if (IsServerInitialized)
@@ -20,7 +34,8 @@ public class Enemy : NetworkBehaviour
             FindClosestTarget();
             if(target != null)
             {
-                MoveToTarget();
+                agent.SetDestination(target.position);
+                //MoveToTarget();
                 CheckForAttack();
             }
 
