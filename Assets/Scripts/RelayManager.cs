@@ -62,13 +62,13 @@ public class RelayManager : MonoBehaviour
     /*
     public async Task<bool> StartClientWithRelay(string joinCode)
     */
-    public async Task StartClientWithRelay()
+    public async Task<bool> StartClientWithRelay()
     {
 
         if (joinCodeInputField == null || string.IsNullOrWhiteSpace(joinCodeInputField.text))
         {
             Debug.LogError("참가 코드가 비어있습니다. 코드를 입력하세요.");
-            return;
+            return false;
         }
 
         string joinCode = joinCodeInputField.text;
@@ -90,5 +90,6 @@ public class RelayManager : MonoBehaviour
 
         //클라이언트 시작
         networkManager.ClientManager.StartConnection();
+        return true;
     }
 }
