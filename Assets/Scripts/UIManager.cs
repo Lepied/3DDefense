@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
         // RelayManager의 StartHostWithRelay 함수 호출
         await relayManager.StartHostWithRelay();
         SceneManager.Instance.LoadScene("Lobby");
+        SceneManager.Instance.UnloadScene("Main");
 
     }
 
@@ -43,6 +44,7 @@ public class UIManager : MonoBehaviour
         if (isConnected)
         {
             SceneManager.Instance.LoadScene("Lobby");
+            SceneManager.Instance.UnloadScene("Main");
         }
         else
         {
@@ -56,6 +58,7 @@ public class UIManager : MonoBehaviour
     public void OnClickStart()
     {
         SceneManager.Instance.LoadScene("Game");
+        SceneManager.Instance.UnloadScene("Lobby");
     }
 
 }
