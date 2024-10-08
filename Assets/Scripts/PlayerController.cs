@@ -106,6 +106,17 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.Log($"플레이어 ID: {this.NetworkObject.OwnerId} 사망");
         }
+        UpdateHPOnClient(hp.Value);
+    }
+
+    [ObserversRpc]
+    private void UpdateHPOnClient(int currentHP)
+    {
+        InGameUIManager uiManager  = FindObjectOfType<InGameUIManager>();
+        if(uiManager != null) 
+        {
+            uiManager.UpdateHPBar(currentHP);
+        }
     }
 }
 
