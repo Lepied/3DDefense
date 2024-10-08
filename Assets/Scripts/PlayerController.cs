@@ -1,3 +1,4 @@
+using FishNet.Connection;
 using FishNet.Example.ColliderRollbacks;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
@@ -5,6 +6,7 @@ using LiteNetLib;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -35,10 +37,14 @@ public class PlayerController : NetworkBehaviour
     {
         base.OnStartClient();
         if(base.IsOwner)
-        { 
-            playerCamera = Camera.main;
-            playerCamera.transform.position = transform.position + cameraOffset; ;
-            playerCamera.transform.rotation = Quaternion.Euler(60, 0, 0); //방향고정
+        {
+            playerCamera = Camera.main; // 메인 카메라 할당
+
+            if (playerCamera != null)
+            {
+                playerCamera.transform.position = transform.position + cameraOffset;
+                playerCamera.transform.rotation = Quaternion.Euler(60, 0, 0); // 방향 고정
+            }
         }
     }
     public override void OnStartServer()
@@ -62,6 +68,7 @@ public class PlayerController : NetworkBehaviour
         if (playerCamera != null)
         {
             playerCamera.transform.position = transform.position + cameraOffset; // 카메라 위치 업데이트
+            Debug.Log(playerCamera.transform.position);
         }
 
     }
@@ -106,11 +113,11 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.Log($"플레이어 ID: {this.NetworkObject.OwnerId} 사망");
         }
-        UpdateHPOnClient(hp.Value);
+        UpdateHPOnClient(this.Owner, hp.Value);
     }
 
-    [ObserversRpc]
-    private void UpdateHPOnClient(int currentHP)
+    [TargetRpc]
+    private void UpdateHPOnClient(NetworkConnection target,int currentHP)
     {
         InGameUIManager uiManager  = FindObjectOfType<InGameUIManager>();
         if(uiManager != null) 
@@ -118,5 +125,6 @@ public class PlayerController : NetworkBehaviour
             uiManager.UpdateHPBar(currentHP);
         }
     }
+
 }
 

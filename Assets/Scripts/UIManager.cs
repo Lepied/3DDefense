@@ -59,6 +59,7 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.Instance.LoadScene("Game");
         SceneManager.Instance.UnloadScene("Lobby");
+        SceneManager.Instance.UnloadScene("Main");
     }
 
 }

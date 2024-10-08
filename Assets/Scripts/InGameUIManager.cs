@@ -9,6 +9,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void UpdateHPBar(int hp)
     {
+  
         playerHPbar.value = (float)hp / 100f;
         Debug.Log("HP UI 업데이트 : " + hp);
     }
