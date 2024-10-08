@@ -20,6 +20,7 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField]
     private Vector3 cameraOffset = new Vector3(0, 15, -9); // 카메라 위치 오프셋
+    [SerializeField]
     private Camera playerCamera;
 
 
@@ -30,7 +31,7 @@ public class PlayerController : NetworkBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-      
+
     }
 
     public override void OnStartClient()
@@ -38,7 +39,10 @@ public class PlayerController : NetworkBehaviour
         base.OnStartClient();
         if(base.IsOwner)
         {
-            playerCamera = Camera.main; // 메인 카메라 할당
+            if (playerCamera == null)
+            {
+                playerCamera = Camera.main;
+            }
 
             if (playerCamera != null)
             {
@@ -53,6 +57,7 @@ public class PlayerController : NetworkBehaviour
         hp.Value = 100; // 초기 체력값 설정
     }
 
+
     void Update()
     {
         if (!base.IsOwner)
@@ -64,11 +69,15 @@ public class PlayerController : NetworkBehaviour
         vertical = Input.GetAxisRaw("Vertical");
 
         direction = new Vector3(horizontal, 0, vertical).normalized;
+        if (playerCamera == null)
+        {
+            playerCamera = Camera.main;
+            Debug.Log("이거 한번만 실행됨?");
+        }
 
         if (playerCamera != null)
         {
             playerCamera.transform.position = transform.position + cameraOffset; // 카메라 위치 업데이트
-            Debug.Log(playerCamera.transform.position);
         }
 
     }
