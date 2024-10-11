@@ -661,7 +661,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 707406562}
         m_TargetAssemblyTypeName: ResoureManager, Assembly-CSharp
-        m_MethodName: AddPersonalWood
+        m_MethodName: OnAddPersonalWoodButtonPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHPbar: {fileID: 199683235}
   personalWoodText: {fileID: 1076644246}
-  sharedWoodText: {fileID: 0}
+  sharedWoodText: {fileID: 625945792}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2288,7 +2288,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 707406562}
         m_TargetAssemblyTypeName: ResoureManager, Assembly-CSharp
-        m_MethodName: SpendPersonalWood
+        m_MethodName: OnSpendPersonalWoodButtonPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

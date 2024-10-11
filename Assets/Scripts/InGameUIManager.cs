@@ -22,11 +22,13 @@ public class InGameUIManager : MonoBehaviour
     public void UpdatePersonalWoodUI(int newWood)
     {
         personalWoodText.text = "¸ñÀç : "+ newWood.ToString();
+        Debug.Log("°³ÀÎ ¸ñÀç È¹µæ +" + newWood);
     }
 
     public void UpdateSharedWoodUI(int newWood)
     {
         sharedWoodText.text = "¸ñÀç : " + newWood.ToString();
+        Debug.Log("°ø¿ë ¸ñÀç È¹µæ +" + newWood);
     }
 
 

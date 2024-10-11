@@ -29,42 +29,64 @@ public class ResoureManager : NetworkBehaviour
         personalWood.Value = 0; 
         sharedWood.Value = 0;
     }
+    // 버튼용 함수
+    public void OnAddPersonalWoodButtonPressed(int amount)
+    {
+        AddPersonalWood(amount); 
+    }
+
+    public void OnSpendPersonalWoodButtonPressed(int amount)
+    {
+        SpendPersonalWood(amount); 
+    }
+
 
     //자원들은 모든 클라이언트가 사용하고 추가
     //But, 개인 자원과 공용자원이 별도
     // 개인자원 목재를 추가
     [ServerRpc(RequireOwnership = false)]
-    public void AddPersonalWood(int amount)
+    public void AddPersonalWood(int amount, NetworkConnection sender = null)
     {
+        Debug.Log($"AddPersonalWood called by: {this.Owner.ClientId}");
+
         personalWood.Value += amount;
-        UpdatePersonalWood(this.Owner,personalWood.Value);
+        UpdatePersonalWood(sender,personalWood.Value);
+        Debug.Log("개인 목재 획득 +" + personalWood.Value);
     }
 
 
     //개인자원 목재소비
     [ServerRpc(RequireOwnership = false)]
-    public void SpendPersonalWood(int amount)
+    public void SpendPersonalWood(int amount, NetworkConnection sender = null)
     {
         if (personalWood.Value >= amount)
         {
             personalWood.Value -= amount;
-            UpdatePersonalWood(this.Owner,personalWood.Value);
-            NotifyClientWoodSpent(this.Owner,true);
+            UpdatePersonalWood(sender,personalWood.Value);
+            NotifyClientWoodSpent(sender,true);
         }
         else
         {
-            NotifyClientWoodSpent(this.Owner,false);
+            NotifyClientWoodSpent(sender, false);
         }
     }
+
     [TargetRpc]
     private void UpdatePersonalWood(NetworkConnection target, int newWoodCount)
     {
+        Debug.Log($"UpdatePersonalWood called for connection: {target.ClientId} with wood count: {newWoodCount}");
+
         InGameUIManager uiManager = FindObjectOfType<InGameUIManager>();
         if (uiManager != null)
         {
             uiManager.UpdatePersonalWoodUI(newWoodCount);
         }
+        else
+        {
+            Debug.LogWarning("InGameUIManager not found.");
+        }
     }
+
     [TargetRpc]
     private void NotifyClientWoodSpent(NetworkConnection target,bool isSuccess)
     {
