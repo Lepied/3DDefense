@@ -22,10 +22,10 @@ public class Enemy : NetworkBehaviour
     {
         if (agent == null)
         {
-            Debug.LogError("NavMeshAgent°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("NavMeshAgentï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
         }
         agent.speed = speed;
-        //agent.stoppingDistance = attackRange; //°ø°Ý »ç°Å¸®¿¡¼­ ¸ØÃß°ÔÇÏ±â
+        //agent.stoppingDistance = attackRange; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß°ï¿½ï¿½Ï±ï¿½
     }
     void Update()
     {
@@ -44,7 +44,7 @@ public class Enemy : NetworkBehaviour
 
     void FindClosestTarget()
     {
-        float closestDistance = 100f; //ÀÎ½Ä¹üÀ§(?)
+        float closestDistance = 100f; //ï¿½Î½Ä¹ï¿½ï¿½ï¿½(?)
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         foreach (GameObject player in players)

@@ -19,13 +19,13 @@ public class PlayerController : NetworkBehaviour
     Rigidbody rb;
 
     [SerializeField]
-    private Vector3 cameraOffset = new Vector3(0, 15, -9); // Ä«¸Þ¶ó À§Ä¡ ¿ÀÇÁ¼Â
+    private Vector3 cameraOffset = new Vector3(0, 15, -9); // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     private Camera playerCamera;
 
 
     public readonly SyncVar<int> hp = new SyncVar<int>();
-    private int playerId; // ÇÃ·¹ÀÌ¾î ID ÀúÀå
+    private int playerId; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ID ï¿½ï¿½ï¿½ï¿½
 
 
     private void Start()
@@ -47,14 +47,14 @@ public class PlayerController : NetworkBehaviour
             if (playerCamera != null)
             {
                 playerCamera.transform.position = transform.position + cameraOffset;
-                playerCamera.transform.rotation = Quaternion.Euler(60, 0, 0); // ¹æÇâ °íÁ¤
+                playerCamera.transform.rotation = Quaternion.Euler(60, 0, 0); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
         }
     }
     public override void OnStartServer()
     {
         base.OnStartServer();
-        hp.Value = 100; // ÃÊ±â Ã¼·Â°ª ¼³Á¤
+        hp.Value = 100; // ï¿½Ê±ï¿½ Ã¼ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
 
@@ -72,12 +72,12 @@ public class PlayerController : NetworkBehaviour
         if (playerCamera == null)
         {
             playerCamera = Camera.main;
-            Debug.Log("ÀÌ°Å ÇÑ¹ø¸¸ ½ÇÇàµÊ?");
+            Debug.Log("ï¿½Ì°ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?");
         }
 
         if (playerCamera != null)
         {
-            playerCamera.transform.position = transform.position + cameraOffset; // Ä«¸Þ¶ó À§Ä¡ ¾÷µ¥ÀÌÆ®
+            playerCamera.transform.position = transform.position + cameraOffset; // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         }
 
     }
@@ -117,10 +117,10 @@ public class PlayerController : NetworkBehaviour
     public void TakeDamage(int damage)
     {
         hp.Value -= damage;
-        Debug.Log("³²Àº Ã¼·Â : "+ hp.Value);
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ : "+ hp.Value);
         if(hp.Value<=0)
         {
-            Debug.Log($"ÇÃ·¹ÀÌ¾î ID: {this.NetworkObject.OwnerId} »ç¸Á");
+            Debug.Log($"ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ID: {this.NetworkObject.OwnerId} ï¿½ï¿½ï¿½");
         }
         UpdateHPOnClient(this.Owner, hp.Value);
     }
@@ -128,7 +128,7 @@ public class PlayerController : NetworkBehaviour
     [TargetRpc]
     private void UpdateHPOnClient(NetworkConnection target,int currentHP)
     {
-        InGameUIManager uiManager  = FindObjectOfType<InGameUIManager>();
+        InGameUIManager uiManager  = FindFirstObjectByType<InGameUIManager>();
         if(uiManager != null) 
         {
             uiManager.UpdateHPBar(currentHP);

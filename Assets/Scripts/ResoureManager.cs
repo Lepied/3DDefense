@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class ResoureManager : NetworkBehaviour
 {
-    public readonly SyncVar<int> personalWood = new SyncVar<int>(); //°³ÀÎ ÀÚ¿ø
-    public readonly SyncVar<int> sharedWood = new SyncVar<int>(); //°ø¿ë ÀÚ¿ø
+    public readonly SyncVar<int> personalWood = new SyncVar<int>(); //ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½
+    public readonly SyncVar<int> sharedWood = new SyncVar<int>(); //ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½
     public static ResoureManager Instance { get; private set; }
 
     private void Awake()
@@ -25,11 +25,11 @@ public class ResoureManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        // ÃÊ±â°ª ¼³Á¤
+        // ï¿½Ê±â°ª ï¿½ï¿½ï¿½ï¿½
         personalWood.Value = 0; 
         sharedWood.Value = 0;
     }
-    // ¹öÆ°¿ë ÇÔ¼ö
+    // ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void OnAddPersonalWoodButtonPressed(int amount)
     {
         AddPersonalWood(amount); 
@@ -41,9 +41,9 @@ public class ResoureManager : NetworkBehaviour
     }
 
 
-    //ÀÚ¿øµéÀº ¸ðµç Å¬¶óÀÌ¾ðÆ®°¡ »ç¿ëÇÏ°í Ãß°¡
-    //But, °³ÀÎ ÀÚ¿ø°ú °ø¿ëÀÚ¿øÀÌ º°µµ
-    // °³ÀÎÀÚ¿ø ¸ñÀç¸¦ Ãß°¡
+    //ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ß°ï¿½
+    //But, ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ç¸¦ ï¿½ß°ï¿½
     [ServerRpc(RequireOwnership = false)]
     public void AddPersonalWood(int amount, NetworkConnection sender = null)
     {
@@ -51,11 +51,11 @@ public class ResoureManager : NetworkBehaviour
 
         personalWood.Value += amount;
         UpdatePersonalWood(sender,personalWood.Value);
-        Debug.Log("°³ÀÎ ¸ñÀç È¹µæ +" + personalWood.Value);
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ +" + personalWood.Value);
     }
 
 
-    //°³ÀÎÀÚ¿ø ¸ñÀç¼Òºñ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½Òºï¿½
     [ServerRpc(RequireOwnership = false)]
     public void SpendPersonalWood(int amount, NetworkConnection sender = null)
     {
@@ -76,7 +76,7 @@ public class ResoureManager : NetworkBehaviour
     {
         Debug.Log($"UpdatePersonalWood called for connection: {target.ClientId} with wood count: {newWoodCount}");
 
-        InGameUIManager uiManager = FindObjectOfType<InGameUIManager>();
+        InGameUIManager uiManager = FindFirstObjectByType<InGameUIManager>();
         if (uiManager != null)
         {
             uiManager.UpdatePersonalWoodUI(newWoodCount);
@@ -90,18 +90,18 @@ public class ResoureManager : NetworkBehaviour
     [TargetRpc]
     private void NotifyClientWoodSpent(NetworkConnection target,bool isSuccess)
     {
-        // Å¬¶óÀÌ¾ðÆ®¿¡¼­ ÀÚ¿ø ¼Òºñ ¼º°ø/½ÇÆÐ ¿©ºÎ¿¡ µû¶ó Ã³¸®
+        // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½Òºï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
         if (isSuccess)
         {
-            Debug.Log("ÀÚ¿ø ¼Òºñ ¼º°ø");
+            Debug.Log("ï¿½Ú¿ï¿½ ï¿½Òºï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
         else
         {
-            Debug.Log("ÀÚ¿øÀÌ ºÎÁ·ÇÏ¿© ¼ÒºñÇÒ ¼ö ¾ø½À´Ï´Ù.");
+            Debug.Log("ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Òºï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
     }
 
-    // °ø¿ë ÀÚ¿ø¿¡ ¸ñÀç¸¦ Ãß°¡
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ç¸¦ ï¿½ß°ï¿½
     [ServerRpc(RequireOwnership = false)]
     public void AddSharedWood(int amount)
     {
@@ -109,11 +109,11 @@ public class ResoureManager : NetworkBehaviour
         UpdateSharedWoodOnClients(sharedWood.Value);
     }
 
-    // °ø¿ë ÀÚ¿øÀÇ UI¸¦ ¾÷µ¥ÀÌÆ®
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     [ObserversRpc]
     private void UpdateSharedWoodOnClients(int newWoodCount)
     {
-        InGameUIManager uiManager = FindObjectOfType<InGameUIManager>();
+        InGameUIManager uiManager = FindFirstObjectByType<InGameUIManager>();
         if (uiManager != null)
         {
             uiManager.UpdateSharedWoodUI(newWoodCount);

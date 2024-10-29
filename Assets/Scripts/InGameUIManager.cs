@@ -16,19 +16,19 @@ public class InGameUIManager : MonoBehaviour
     {
   
         playerHPbar.value = (float)hp / 100f;
-        Debug.Log("HP UI ¾÷µ¥ÀÌÆ® : " + hp);
+        Debug.Log("HP UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® : " + hp);
     }
 
     public void UpdatePersonalWoodUI(int newWood)
     {
-        personalWoodText.text = "¸ñÀç : "+ newWood.ToString();
-        Debug.Log("°³ÀÎ ¸ñÀç È¹µæ +" + newWood);
+        personalWoodText.text = "ï¿½ï¿½ï¿½ï¿½ : "+ newWood.ToString();
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ +" + newWood);
     }
 
     public void UpdateSharedWoodUI(int newWood)
     {
-        sharedWoodText.text = "¸ñÀç : " + newWood.ToString();
-        Debug.Log("°ø¿ë ¸ñÀç È¹µæ +" + newWood);
+        sharedWoodText.text = "ï¿½ï¿½ï¿½ï¿½ : " + newWood.ToString();
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ +" + newWood);
     }
 
 

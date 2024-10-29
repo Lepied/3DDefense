@@ -28,17 +28,17 @@ public class UIManager : MonoBehaviour
 
     public async void OnClickHost()
     {
-        // RelayManagerÀÇ StartHostWithRelay ÇÔ¼ö È£Ãâ
+        // RelayManagerï¿½ï¿½ StartHostWithRelay ï¿½Ô¼ï¿½ È£ï¿½ï¿½
         await relayManager.StartHostWithRelay();
         SceneManager.Instance.LoadScene("Lobby");
         SceneManager.Instance.UnloadScene("Main");
 
     }
 
-    // Å¬¶óÀÌ¾ðÆ® Âü°¡ ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
+    // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
     public async void OnClickJoin()
     {
-        // RelayManagerÀÇ StartClientWithRelay ÇÔ¼ö È£Ãâ
+        // RelayManagerï¿½ï¿½ StartClientWithRelay ï¿½Ô¼ï¿½ È£ï¿½ï¿½
         bool isConnected = await relayManager.StartClientWithRelay();
 
         if (isConnected)
@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("¼­¹öÁ¢¼Ó ½ÇÆÐ");
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
 
         

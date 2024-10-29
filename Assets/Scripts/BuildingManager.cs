@@ -18,7 +18,7 @@ public class BuildingManager : NetworkBehaviour
 
 
 
-    public Color color = new Color(1, 0, 0, 0.5f); // »¡°£»ö + ¾ËÆÄ°ª 0.5
+    public Color color = new Color(1, 0, 0, 0.5f); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½Ä°ï¿½ 0.5
     public Color originalColor;
 
     private void Update()
@@ -50,7 +50,7 @@ public class BuildingManager : NetworkBehaviour
         {
             currentPreview = Instantiate(previewPrefab);
             PreviewBuilding previewBuilding = currentPreview.GetComponentInChildren<Collider>().gameObject.AddComponent<PreviewBuilding>();
-            previewBuilding.buildingManager = this; // BuildingManager¸¦ ÇÒ´ç
+            previewBuilding.buildingManager = this; // BuildingManagerï¿½ï¿½ ï¿½Ò´ï¿½
 
 
             originalColor = currentPreview.GetComponentInChildren<Renderer>().material.color;
@@ -68,7 +68,7 @@ public class BuildingManager : NetworkBehaviour
         RaycastHit hit;
 
 
-        // ¸ÕÀú Ground¿¡ Ãæµ¹Çß´ÂÁö Ã¼Å©
+        // ï¿½ï¿½ï¿½ï¿½ Groundï¿½ï¿½ ï¿½æµ¹ï¿½ß´ï¿½ï¿½ï¿½ Ã¼Å©
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
         {
             currentPreview.transform.position = hit.point;   

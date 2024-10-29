@@ -28,32 +28,32 @@ public class RelayManager : MonoBehaviour
 
     public async Task StartHostWithRelay(int maxConnections = 5)
     {
-        // À¯´ÏÆ¼ ¼­ºñ½º ÃÊ±âÈ­ÇÏ±â
+        // ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï±ï¿½
         await UnityServices.InitializeAsync();
 
-        //ÀÍ¸íÀ¸·Î  Á¢¼Ó
+        //ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½
         if (!AuthenticationService.Instance.IsSignedIn)
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
 
-        //¸±·¹ÀÌ ¼­¹ö »ý¼º / maxConnections ¼ö ¸¸Å­ ÀÎ¿ø¼ö
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ / maxConnections ï¿½ï¿½ ï¿½ï¿½Å­ ï¿½Î¿ï¿½ï¿½ï¿½
         Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
 
-        //°¡ÀÔÄÚµå »ý¼º
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
         var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
-        //°¡ÀÔÄÚµå ÀÚµ¿ÇÒ´ç
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ ï¿½Úµï¿½ï¿½Ò´ï¿½
         joinCodeInputField.text = joinCode;
 
-        //FishNet¿¡ µé¾î¿À´Â Æ®·¡ÇÈÀ» ÀüºÎ ¸±·¹ÀÌ ¼­¹ö·Î Àü´ÞµÇµµ·Ï ¼³Á¤
+        //FishNetï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÞµÇµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         FishyUnityTransport transport = networkManager.TransportManager.GetTransport<FishyUnityTransport>();
         transport.SetRelayServerData(new RelayServerData(allocation, "dtls"));
 
-        //È£½ºÆ® ½ÃÀÛ
-        if (networkManager.ServerManager.StartConnection())//È£½ºÆ® ½ÃÀÛ 
+        //È£ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+        if (networkManager.ServerManager.StartConnection())//È£ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ 
         {
-            networkManager.ClientManager.StartConnection();//Å¬¶óÀÌ¾ðÆ® ½ÃÀÛ
+            networkManager.ClientManager.StartConnection();//Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
             //return joinCode;
         }
         //return null;
@@ -67,7 +67,7 @@ public class RelayManager : MonoBehaviour
 
         if (joinCodeInputField == null || string.IsNullOrWhiteSpace(joinCodeInputField.text))
         {
-            Debug.LogError("Âü°¡ ÄÚµå°¡ ºñ¾îÀÖ½À´Ï´Ù. ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ï´ï¿½. ï¿½Úµå¸¦ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
             return false;
         }
 
@@ -81,14 +81,14 @@ public class RelayManager : MonoBehaviour
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
 
-        //°¡ÀÔ ÄÚµå·Î ¸±·¹ÀÌ ¼­¹ö¿¡ Á¢¼Ó
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         var joinloacation = await RelayService.Instance.JoinAllocationAsync(joinCode: joinCode);
 
-        //FishNet¿¡ µé¾î¿À´Â Æ®·¡ÇÈÀ» ÀüºÎ ¸±·¹ÀÌ ¼­¹ö·Î Àü´ÞµÇµµ·Ï ¼³Á¤
+        //FishNetï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÞµÇµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         FishyUnityTransport transport = networkManager.TransportManager.GetTransport<FishyUnityTransport>();
         transport.SetRelayServerData(new RelayServerData(joinloacation, "dtls"));
 
-        //Å¬¶óÀÌ¾ðÆ® ½ÃÀÛ
+        //Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         networkManager.ClientManager.StartConnection();
         return true;
     }
